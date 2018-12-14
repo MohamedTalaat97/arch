@@ -3,7 +3,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 ---------------------------------------------------------
 Entity system is
 port (  SelectSourceA : in std_logic_vector (3 downto 0);
-SelectSourceB : in std_logic_vector (3 downto 0);
+	SelectSourceB : in std_logic_vector (3 downto 0);
 	SelectDistC : in std_logic_vector (3 downto 0);
 	DecoderEnSrcA: in std_logic;
         DecoderEnSrcB: in std_logic;
@@ -100,12 +100,13 @@ Regflag:entity work.my_nDFF  generic map (16) port map ( clk , rst ,flags, outRe
 tri12A: entity work.tri_state_buffer port map (outRegFlagTriIn,busADecOutTriEn(12),busA );
 tri12B: entity work.tri_state_buffer port map (outRegFlagTriIn,busBDecOutTriEn(12),busB );
 --------------------------------------------------------------------------------------------------------------------
-alu : entity work.ALU port map (busA,busB,outRegFlagTriIn(0),aluSel,busC, flags(0),flags); --alu
+alu : entity work.ALU port map (busA,busB,outRegFlagTriIn(0),aluSel,busC, flags(0)); --alu
 flags(1) <='1' when busC =x"0000" else '0';
 flags(2) <='1' when busC(15) ='1' else '0';
 flags(3)<= not(busC(0));
---flag(4)
-flags(5) <='1';
+flags(5)<='1'; -- flag register enable
+
+flags(15 downto 6) <="0000000000";
 ---------------------------------------------------------------------------------------------------------------
 end Architecture;
 

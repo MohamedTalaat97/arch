@@ -6,8 +6,8 @@ Port(A,B	:in	std_logic_vector(15 downto 0);
      Cin:in  std_logic;
      AluSelect : in std_logic_vector(4 downto 0);
 	 F:	out	std_logic_vector(15 downto 0) ;
-	 cout :out std_logic;
-         flag:out std_logic_vector(15 downto 0));
+	 cout :out std_logic);
+         --flag:out std_logic_vector(15 downto 0));
 end entity ALU;
 ---------------------------------------------------
 architecture AluBehavioral of ALU is---------------
@@ -17,7 +17,7 @@ signal carryadd :std_logic ;
 ---------------------------------------------------
 begin----------------------------------------------
 ---------------------------------------------------
-flag<= x"0000";
+u3: entity work.AddOperations PORT MAP (A,B,CIN,AluSelect(0),AluSelect(1),AluSelect(2),outAdd,carryadd);
 F <= A and B when AluSelect = "00000"
 else A or B when AluSelect ="00001"
 else A xnor B when AluSelect = "00010"
@@ -34,14 +34,17 @@ else A(14 downto 0) & A(15) when AluSelect ="01010"
 else A(14 downto 0) & CIN when AluSelect="01011"
 else A when AluSelect="01100"
 else B when AluSelect="01101"
-else "0000000000000000" when AluSelect="01110";
+else "0000000000000000" when AluSelect="01110"
+else outAdd when  AluSelect(4)='1';	
 ---
-Cout<=A(0) when AluSelect="00111";
-COUT<=A(15) when AluSelect="01011";
+Cout<=A(0) when AluSelect="00111"
+else A(15) when AluSelect="01011"
+else carryadd when AluSelect(4)='1'
+else Cin;
 ---
-u3: entity work.AddOperations PORT MAP (A,B,CIN,AluSelect(0),AluSelect(1),AluSelect(2),outAdd,carryadd);
-F <= outAdd when  AluSelect(4)='1';	
-Cout<=carryadd when AluSelect(4)='1';
+
+
+
 
 
 ----------------------------------------------------------------------------------------------
