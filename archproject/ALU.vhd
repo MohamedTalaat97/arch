@@ -2,11 +2,12 @@ LIBRARY IEEE;
 USE IEEE.std_logic_1164.all;
 --------------------------------------------------
 entity ALU is
-Port(A,B	:in	std_logic_vector(15 downto 0);
-     Cin:in  std_logic;
-     AluSelect : in std_logic_vector(4 downto 0);
-	 F:	out	std_logic_vector(15 downto 0) ;
-	 cout :out std_logic);
+Port(	F: out std_logic_vector(15 downto 0);
+	A,B:in std_logic_vector(15 downto 0);     		
+     	Cin:in std_logic;
+	AluSelect: in std_logic_vector(4 downto 0);
+	cout:out std_logic
+);
          --flag:out std_logic_vector(15 downto 0));
 end entity ALU;
 ---------------------------------------------------

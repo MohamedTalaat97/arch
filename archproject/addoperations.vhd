@@ -5,7 +5,7 @@ entity AddOperations is
 Port(	A,B	:in	std_logic_vector(15 downto 0);
 	Cin,S0,S1,S2 :in  std_logic;
 	F:out	std_logic_vector(15 downto 0) ;
-	 cout :out std_logic);
+	cout :out std_logic);
 			
 end entity AddOperations;
 -------------------------------------------------------
